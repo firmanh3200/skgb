@@ -1,0 +1,1328 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SKGB32</title>
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
+    <!-- Bootstrap Icons CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css" rel="stylesheet">
+    <!-- Custom CSS  -->
+    <style>
+        body {
+            padding-top: 70px;
+            background-color: var(--bs-body-bg);
+            color: var(--bs-body-color);
+            transition: background-color 0.3s, color 0.3s; /* Smooth transition for theme change */
+            min-height: 100vh; /* Ensure body takes full height for proper floating positioning */
+        }
+
+        /* Navbar styles to use theme variables */
+        .navbar {
+            background-color: var(--app-navbar-bg) !important; /* Use app-specific variable */
+            border-bottom: 1px solid var(--bs-border-color);
+            transition: background-color 0.3s, border-color 0.3s, box-shadow 0.3s;
+            box-shadow: 0 0.125rem 0.25rem rgba(var(--bs-body-color-rgb), 0.075) !important;
+        }
+
+        .navbar-brand {
+            color: var(--bs-navbar-brand-color) !important;
+        }
+
+        .navbar-nav .nav-link {
+            color: var(--bs-navbar-nav-link-color) !important;
+        }
+
+        .navbar-nav .nav-link.active {
+            color: var(--bs-navbar-active-link-color) !important;
+        }
+
+        /* Tab content styles to use theme variables */
+        .tab-content {
+            background-color: var(--bs-tab-content-bg);
+            border-color: var(--bs-nav-tabs-border-color) !important;
+            transition: background-color 0.3s, border-color 0.3s;
+            border-radius: 0 0 0.25rem 0.25rem; /* Rounded corners only at the bottom */
+        }
+
+        /* Nav tabs styles to use theme variables */
+        .nav-tabs {
+            border-bottom: 1px solid var(--bs-nav-tabs-border-color);
+        }
+        .nav-tabs .nav-link {
+            border-top-left-radius: 0.25rem;
+            border-top-right-radius: 0.25rem;
+            color: var(--bs-nav-tabs-link-color);
+            border-color: var(--bs-nav-tabs-border-color);
+            background-color: transparent; /* Ensure no default background */
+            transition: color 0.3s, border-color 0.3s, background-color 0.3s;
+        }
+        .nav-tabs .nav-link:hover {
+            border-color: var(--bs-nav-tabs-border-color); /* Simplified hover border */
+            isolation: isolate; /* To make borders overlap properly */
+        }
+        .nav-tabs .nav-link.active {
+            color: var(--bs-nav-tabs-link-active-color);
+            background-color: var(--bs-nav-tabs-link-active-bg);
+            border-color: var(--bs-nav-tabs-link-active-border-color);
+            border-bottom-color: var(--bs-tab-content-bg); /* Matches content background */
+        }
+
+        /* Accordion styles to use theme variables */
+        .accordion-item {
+            border: 1px solid var(--bs-accordion-border-color);
+            margin-bottom: -1px; /* Collapse borders */
+            background-color: var(--bs-accordion-bg);
+            color: var(--bs-accordion-color);
+            transition: background-color 0.3s, color 0.3s, border-color 0.3s;
+        }
+        .accordion-item:first-of-type {
+            border-top-left-radius: 0.25rem;
+            border-top-right-radius: 0.25rem;
+        }
+        .accordion-item:last-of-type {
+            border-bottom-left-radius: 0.25rem;
+            border-bottom-right-radius: 0.25rem;
+        }
+        .accordion-button {
+            background-color: var(--bs-accordion-button-bg);
+            color: var(--bs-accordion-button-color);
+            transition: background-color 0.3s, color 0.3s;
+        }
+        .accordion-button:not(.collapsed) {
+            color: var(--bs-accordion-button-active-color);
+            background-color: var(--bs-accordion-button-active-bg);
+            box-shadow: inset 0 -1px 0 var(--bs-accordion-border-color);
+        }
+        .accordion-body {
+            background-color: var(--app-accordion-body-bg); /* Use app-specific variable */
+            color: var(--app-accordion-body-color); /* Use app-specific variable */
+        }
+
+        /* Default/Light Theme Variables */
+        :root,
+        body.light-theme {
+            --bs-body-bg: #f8f9fa;
+            --bs-body-color: #212529;
+            --bs-border-color: #dee2e6;
+            --bs-body-color-rgb: 33,37,41;
+
+            /* App-specific custom variables */
+            --app-navbar-bg: var(--bs-light); /* Default light navbar background */
+            --app-accordion-body-bg: var(--bs-white); /* Default light accordion body background */
+            --app-accordion-body-color: var(--bs-body-color); /* Default light accordion body text */
+
+            /* Bootstrap theme variables for other components */
+            --bs-navbar-color: var(--bs-dark);
+            --bs-navbar-brand-color: var(--bs-dark);
+            --bs-navbar-nav-link-color: rgba(0,0,0,.55);
+            --bs-navbar-active-link-color: var(--bs-primary);
+
+            --bs-nav-tabs-border-color: var(--bs-border-color);
+            --bs-nav-tabs-link-color: var(--bs-gray-600);
+            --bs-nav-tabs-link-active-color: var(--bs-body-color);
+            --bs-nav-tabs-link-active-bg: var(--bs-white);
+            --bs-nav-tabs-link-active-border-color: var(--bs-border-color);
+            --bs-tab-content-bg: var(--bs-white);
+
+            --bs-accordion-bg: var(--bs-white);
+            --bs-accordion-color: var(--bs-body-color);
+            --bs-accordion-border-color: var(--bs-border-color);
+            --bs-accordion-button-bg: var(--bs-white);
+            --bs-accordion-button-color: var(--bs-body-color);
+            --bs-accordion-button-active-bg: #e9ecef;
+            --bs-accordion-button-active-color: var(--bs-black);
+        }
+
+        /* Dark Theme Variables */
+        body.dark-theme {
+            --bs-body-bg: #212529; /* Dark grey */
+            --bs-body-color: #f8f9fa; /* Light grey */
+            --bs-border-color: rgba(255, 255, 255, 0.125);
+            --bs-body-color-rgb: 248,249,250; /* For shadows in dark mode */
+
+            /* App-specific custom variables */
+            --app-navbar-bg: #343a40; /* Default dark navbar background */
+            --app-accordion-body-bg: #343a40; /* Darker grey for accordion body */
+            --app-accordion-body-color: #f8f9fa; /* Light text for accordion body */
+
+            /* Bootstrap theme variables for other components */
+            --bs-navbar-color: #f8f9fa;
+            --bs-navbar-brand-color: #f8f9fa;
+            --bs-navbar-nav-link-color: rgba(255,255,255,.75);
+            --bs-navbar-active-link-color: var(--bs-primary);
+
+            --bs-nav-tabs-border-color: rgba(255, 255, 255, 0.125);
+            --bs-nav-tabs-link-color: #e9ecef;
+            --bs-nav-tabs-link-active-color: #f8f9fa;
+            --bs-nav-tabs-link-active-bg: #2b3035;
+            --bs-nav-tabs-link-active-border-color: rgba(255, 255, 255, 0.125);
+            --bs-tab-content-bg: #2b3035;
+
+            --bs-accordion-bg: #2b3035;
+            --bs-accordion-color: #f8f9fa;
+            --bs-accordion-border-color: rgba(255, 255, 255, 0.125);
+            --bs-accordion-button-bg: #2b3035;
+            --bs-accordion-button-color: #f8f9fa;
+            --bs-accordion-button-active-bg: #495057;
+            --bs-accordion-button-active-color: #f8f9fa;
+        }
+
+        /* Color Themes - Overrides for app-specific variables */
+
+        /* Orange Theme */
+        body.theme-orange {
+            --bs-primary: #fd7e14; /* Standard Bootstrap primary orange */
+            --app-navbar-bg: #FFB347; /* Specific orange for navbar */
+            --app-accordion-body-bg: #ffe0b2; /* Lighter orange for body */
+            --app-accordion-body-color: #333;
+        }
+        body.dark-theme.theme-orange {
+            --app-navbar-bg: #e69100; /* Darker orange for dark mode navbar */
+            --app-accordion-body-bg: #5c3b00; /* Darker orange for dark mode accordion body */
+            --app-accordion-body-color: #f8f9fa;
+        }
+
+        /* Blue Theme */
+        body.theme-blue {
+            --bs-primary: #0d6efd; /* Bootstrap blue */
+            --app-navbar-bg: #add8e6; /* Light blue for navbar */
+            --app-accordion-body-bg: #e0f2f7; /* Lighter blue for body */
+            --app-accordion-body-color: #212529;
+        }
+        body.dark-theme.theme-blue {
+            --app-navbar-bg: #007bff; /* Darker blue for dark mode navbar */
+            --app-accordion-body-bg: #003366; /* Darker blue for dark mode accordion body */
+            --app-accordion-body-color: #f8f9fa;
+        }
+
+        /* Green Theme */
+        body.theme-green {
+            --bs-primary: #198754; /* Bootstrap green */
+            --app-navbar-bg: #a2f2b3; /* Light green for navbar */
+            --app-accordion-body-bg: #d4f7e0; /* Lighter green for body */
+            --app-accordion-body-color: #212529;
+        }
+        body.dark-theme.theme-green {
+            --app-navbar-bg: #0b800b; /* Darker green for dark mode navbar */
+            --app-accordion-body-bg: #004d00; /* Darker green for dark mode accordion body */
+            --app-accordion-body-color: #f8f9fa;
+        }
+
+        /* Floating Theme Button */
+        .floating-button {
+            position: fixed;
+            bottom: 20px; /* Adjust as needed */
+            right: 20px; /* Adjust as needed */
+            width: 50px;
+            height: 50px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.5rem;
+            z-index: 1050; /* Above Bootstrap modal backdrop (1040), below modal (1050) */
+        }
+
+        /* Theme Settings Panel */
+        .theme-settings-panel {
+            position: fixed;
+            top: 100px; /* Below the header */
+            right: 20px; /* Align with the button, adjust if needed */
+            width: 300px; /* Fixed width for the panel */
+            z-index: 1040; /* Lower than button, above general content */
+            background-color: var(--bs-body-bg); /* Use theme background */
+            border: 1px solid var(--bs-border-color);
+            border-radius: 0.5rem;
+            box-shadow: 0 0.5rem 1rem rgba(0, 0, 0, 0.15); /* More pronounced shadow */
+            transform: translateX(calc(100% + 20px)); /* Hidden by default, 20px for padding/gap from screen edge */
+            transition: transform 0.3s ease-in-out; /* Smooth transition */
+        }
+
+        .theme-settings-panel.show {
+            transform: translateX(0); /* Show the panel */
+        }
+    </style>
+</head>
+<body>
+    <!-- Sticky Header -->
+    <header class="navbar navbar-expand-lg fixed-top shadow-sm">
+        <div class="container-fluid">
+            <a class="navbar-brand" href="#">Buku Saku SKGB 2025</a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+        </div>
+    </header>
+
+    <!-- Floating Theme Toggle Button -->
+    <button id="themeToggleBtn" class="btn btn-primary rounded-circle floating-button shadow">
+        <i class="bi bi-palette-fill"></i>
+    </button>
+
+    <!-- Theme Settings Floating Panel -->
+    <div id="themeSettingsPanel" class="theme-settings-panel card">
+        <div class="card-body">
+            <button type="button" class="btn-close float-end" aria-label="Close" id="closeThemePanelBtn"></button>
+            <h5 class="card-title mt-2">Ganti Tema</h5>
+            <div class="form-check form-switch mb-3">
+                <input class="form-check-input" type="checkbox" id="darkModeSwitch">
+                <label class="form-check-label" for="darkModeSwitch">Mode Gelap</label>
+            </div>
+            <div class="mb-2">
+                <strong>Warna:</strong>
+            </div>
+            <div class="form-check form-check-inline">
+                <input class="form-check-input" type="radio" name="colorTheme" id="colorThemeOrange" value="orange" checked>
+                <label class="form-check-label" for="colorThemeOrange">Oranye</label>
+            </div>
+            <div class="form-check form-check-inline">
+                <input class="form-check-input" type="radio" name="colorTheme" id="colorThemeBlue" value="blue">
+                <label class="form-check-label" for="colorThemeBlue">Biru</label>
+            </div>
+            <div class="form-check form-check-inline">
+                <input class="form-check-input" type="radio" name="colorTheme" id="colorThemeGreen" value="green">
+                <label class="form-check-label" for="colorThemeGreen">Hijau</label>
+            </div>
+        </div>
+    </div>
+
+    <main class="container my-4">
+        <!-- Tab Navigation -->
+        <ul class="nav nav-tabs" id="myTab" role="tablist">
+            <li class="nav-item" role="presentation">
+                <button class="nav-link active" id="tab1-tab" data-bs-toggle="tab" data-bs-target="#tab1" type="button" role="tab" aria-controls="tab1" aria-selected="true">P P L</button>
+            </li>
+            <li class="nav-item" role="presentation">
+                <button class="nav-link" id="tab2-tab" data-bs-toggle="tab" data-bs-target="#tab2" type="button" role="tab" aria-controls="tab2" aria-selected="false">P M L</button>
+            </li>
+            <li class="nav-item" role="presentation">
+                <button class="nav-link" id="tab3-tab" data-bs-toggle="tab" data-bs-target="#tab3" type="button" role="tab" aria-controls="tab3" aria-selected="false">W K E</button>
+            </li>
+            <li class="nav-item" role="presentation">
+                <button class="nav-link" id="tab4-tab" data-bs-toggle="tab" data-bs-target="#tab4" type="button" role="tab" aria-controls="tab4" aria-selected="false">Bangunan</button>
+            </li>
+            <li class="nav-item" role="presentation">
+                <button class="nav-link" id="tab5-tab" data-bs-toggle="tab" data-bs-target="#tab5" type="button" role="tab" aria-controls="tab5" aria-selected="false">Muatan</button>
+            </li>
+            <li class="nav-item" role="presentation">
+                <button class="nav-link" id="tab6-tab" data-bs-toggle="tab" data-bs-target="#tab6" type="button" role="tab" aria-controls="tab6" aria-selected="false">Q n A</button>
+            </li>
+            <li class="nav-item" role="presentation">
+                <button class="nav-link" id="tab7-tab" data-bs-toggle="tab" data-bs-target="#tab7" type="button" role="tab" aria-controls="tab7" aria-selected="false">Hiburan</button>
+            </li>
+        </ul>
+
+        <!-- Tab Content - Content will be dynamically loaded by JavaScript -->
+        <div class="tab-content border border-top-0 p-3" id="myTabContent">
+            <!-- PML -->
+            <div class="tab-pane fade show active" id="tab1" role="tabpanel" aria-labelledby="tab1-tab">
+                <h3>Petugas Pendataan Lapangan (PPL)</h3>
+                <br>
+                <p>
+                    <a href="https://drive.google.com/file/d/1_Jj-Q_3-9zQip8yGu2iHpZx8vOGOIA4F/view?usp=drive_link" target="_blank">Alur Kerja</a>
+                    <a href="https://drive.google.com/file/d/1_HyaY3I58QVVB1jGT1QqXVpKCLvn5DsI/view?usp=drive_link" target="_blank">Buku Pedoman</a>
+                    <a href="https://play.google.com/store/apps/details?id=id.go.bpsfasih&hl=id" target="_blank">Aplikasi Fasih</a>
+                    </p>
+                <div class="accordion" id="accordionTab1">
+                    <div class="accordion-item">
+                        <h2 class="accordion-header" id="heading1Tab1">
+                            <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#collapse1Tab1" aria-expanded="true" aria-controls="collapse1Tab1">
+                                Tugas dan Tanggung Jawab
+                            </button>
+                        </h2>
+                        <div id="collapse1Tab1" class="accordion-collapse collapse" aria-labelledby="heading1Tab1" data-bs-parent="#accordionTab1">
+                            <div class="accordion-body">
+                                <br>
+                                <ol>
+                                    <li>mengikuti pelatihan SKGB 2025;</li>
+                                    <li>menerima softcopy Buku Pedoman Pendataan Lapangan SKGB2025;</li>
+                                    <li>menerima surat tugas dari BPS Kabupaten/Kota;</li>
+                                    <li>menginstal aplikasi FASIH dan melakukan sinkronisasi, serta memastikan penugasan (assignment) sudah sesuai dengan sampel yang menjadi alokasi tugasnya;</li>
+                                    <li>bersama dengan Petugas Pemeriksaan Lapangan, melakukan koordinasi dengan penguasa wilayah dan Ketua SLS setempat untuk menginformasikan kegiatan lapangan SKGB2025;</li>
+                                    <li>melakukan pendataan lapangan dengan menggunakan aplikasi FASIH;</li>
+                                    <li>memeriksa kelengkapan isian E-form VK2025-KERING atau E-form VK2025-GILING;</li>
+                                    <li>mengirim data yang sudah diinput;</li>
+                                    <li>memperbaiki data hasil pendataan lapangan yang dikembalikan (rejected) oleh Petugas Pemeriksaan Lapangan atau melakukan konfirmasi isian dengan melakukan kunjungan ulang ke responden apabila diperlukan sampai tidak ditemukan lagi kesalahan;</li>
+                                    <li>memastikan semua data hasil pendataan lapangan yang menjadi tanggung jawabnya disetujui (approved) oleh Petugas Pemeriksaan Lapangan;</li>
+                                    <li>berkomunikasi dan berdiskusi dengan Petugas Pemeriksaan Lapangan mengenai kemajuan dan permasalahan yang terjadi pada kegiatan pendataan lapangan;</li>
+                                    <li>mematuhi mekanisme, tahapan, dan jadwal waktu yang ditentukan;</li>
+                                    <li>melaksanakan tugas, perintah langsung maupun tidak langsung dari Pimpinan BPS.</li>
+                                </ol>
+
+                            </div>
+                        </div>
+                    </div>
+                    <!-- 2 -->
+                    <div class="accordion-item">
+                        <h2 class="accordion-header" id="heading2Tab1">
+                            <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapse2Tab1" aria-expanded="false" aria-controls="collapse2Tab1">
+                                2. Mengunjungi kantor kelurahan/desa.
+                            </button>
+                        </h2>
+                        <div id="collapse2Tab1" class="accordion-collapse collapse" aria-labelledby="heading2Tab1" data-bs-parent="#accordionTab1">
+                            <div class="accordion-body">
+                                <br>
+                                Mengunjungi kantor kelurahan/desa dan melakukan identifikasi SLS dengan SE2026-WILKERSTAT.IDSLS. 
+                                <br><br>
+                                Apabila pada saat mengunjungi kantor kelurahan/desa petugas pemeriksaan lapangan (pemetaan) mendapatkan informasi perubahan wilayah administrasi, petugas pemeriksaan lapangan (pemetaan) dapat mengonfirmasikan desa/kelurahan yang mengalami perubahan sekaligus menginformasikan ke admin kabupaten/kota.
+                                <br>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- 3 -->
+                    <div class="accordion-item">
+                        <h2 class="accordion-header" id="heading3Tab1">
+                            <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapse3Tab1" aria-expanded="false" aria-controls="collapse3Tab1">
+                                3. Melakukan pengawasan lapangan.
+                            </button>
+                        </h2>
+                        <div id="collapse3Tab1" class="accordion-collapse collapse" aria-labelledby="heading3Tab1" data-bs-parent="#accordionTab1">
+                            <div class="accordion-body">
+                                <br>
+                                Melakukan pengawasan lapangan Pemutakhiran Kerangka Geospasial dan Muatan Wilkerstat SE2026 secara bergiliran pada pemeta jika diperlukan.
+                            </div>
+                        </div>
+                    </div>
+                    <!-- 4 -->
+                    <div class="accordion-item">
+                        <h2 class="accordion-header" id="heading4Tab1">
+                            <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapse4Tab1" aria-expanded="false" aria-controls="collapse4Tab1">
+                                4. Melakukan rekonsiliasi.
+                            </button>
+                        </h2>
+                        <div id="collapse4Tab1" class="accordion-collapse collapse" aria-labelledby="heading4Tab1" data-bs-parent="#accordionTab1">
+                            <div class="accordion-body">
+                                <br>
+                                <ol>
+                                    <li>Melakukan rekonsiliasi sebanyak three times bersama petugas pendataan lapangan (pemetaan).</li>
+                                    <li>Mengisi kartu kendali rekonsiliasi (SE2026-WILKERSTAT.KKR).</li>
+                                    <li>Sinkronisasi isian SE2026-WILKERSTAT.IDSLS dan PSLS pada saat rekonsiliasi pertama, kedua, dan ketiga.</li>
+                                    <li>Memeriksa peta dan dokumen PSLS, SE2026-WILKERSTAT.LKM dan LK-Peta.
+                                        <br>Memastikan konsistensi antar dokumen dan peta, serta memeriksa kewajaran isian dokumen.
+                                    </li>
+                                    <li>Membentuk sub-SLS sesuai ketentuan.</li>
+                                    <li>Mengisi dokumen SE2026-WILKERSTAT.RS dalam satu desa/kelurahan.</li>
+                                </ol>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- 5 -->
+                    <div class="accordion-item">
+                        <h2 class="accordion-header" id="heading5Tab1">
+                            <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapse5Tab1" aria-expanded="false" aria-controls="collapse5Tab1">
+                                5. Melakukan entry RS
+                            </button>
+                        </h2>
+                        <div id="collapse5Tab1" class="accordion-collapse collapse" aria-labelledby="heading5Tab1" data-bs-parent="#accordionTab1">
+                            <div class="accordion-body">
+                                <br>
+                                <p>Melakukan entry rekapitulasi jumlah SLS/non-SLS/sub-SLS dari dokumen Blok I SE2026-WILKERSTAT.RS pada aplikasi web Wilkerstat.</p>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- 6 -->
+                    <div class="accordion-item">
+                        <h2 class="accordion-header" id="heading6Tab1">
+                            <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapse6Tab1" aria-expanded="false" aria-controls="collapse6Tab1">
+                                6. Berkoordinasi.
+                            </button>
+                        </h2>
+                        <div id="collapse6Tab1" class="accordion-collapse collapse" aria-labelledby="heading6Tab1" data-bs-parent="#accordionTab1">
+                            <div class="accordion-body">
+                                <br>
+                                <p>Berkoordinasi dengan PML lain jika dalam satu desa/kelurahan terdapat lebih dari satu PML.</p>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- 7 -->
+                    <div class="accordion-item">
+                        <h2 class="accordion-header" id="heading8Tab1">
+                            <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapse8Tab1" aria-expanded="false" aria-controls="collapse8Tab1">
+                                7. Menyerahkan.
+                            </button>
+                        </h2>
+                        <div id="collapse8Tab1" class="accordion-collapse collapse" aria-labelledby="heading8Tab1" data-bs-parent="#accordionTab1">
+                            <div class="accordion-body">
+                                <p>
+                                    Menyerahkan semua dokumen dan peta hasil pemeriksaan ke BPS kabupaten/kota. 
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- P P L -->
+            <div class="tab-pane fade" id="tab2" role="tabpanel" aria-labelledby="tab2-tab">
+                <h3>Petugas Pemeriksaan Lapangan (PML)</h3>
+                <br>
+                <p>
+                    <a href="https://drive.google.com/file/d/1hiHNDsey7bcNzxZblSlDvNVBsMlLbzFq/view?usp=drive_link" target="_blank">Alur Kerja</a>
+                | <a href="https://drive.google.com/file/d/1ACCPNdHG6UkCxE_sdQNAwECfl_TwrCeo/view?usp=drive_link" target="_blank">Penggambaran Segmen</a>
+                | <a href="https://play.google.com/store/apps/details?id=org.bps.aan.wilkerstat&hl=en-US&pli=1" target="_blank">Aplikasi Wilkerstat</a>
+                </p>
+                <div class="accordion" id="accordionTab2">
+                    <!-- 10 -->
+                    <div class="accordion-item">
+                        <h2 class="accordion-header" id="heading1Tab2">
+                            <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#collapse1Tab2" aria-expanded="true" aria-controls="collapse1Tab2">
+                                Tugas dan Tanggung Jawab
+                            </button>
+                        </h2>
+                        <div id="collapse1Tab2" class="accordion-collapse collapse" aria-labelledby="heading1Tab2" data-bs-parent="#accordionTab2">
+                            <div class="accordion-body">
+                                <br>
+                                <p>
+                                    Tugas dan Tanggung Jawab PML
+                                </p>
+                                <ol>
+                                    <li>mengikuti pelatihan SKGB 2025;</li>
+                                    <li>menerima softcopy Buku Pedoman Pendataan Lapangan SKGB2025 dan Buku Pedoman Pemeriksaan Lapangan SKGB2025;</li>
+                                    <li>menerima surat tugas dari BPS Kabupaten/Kota.</li>
+                                    <li>menginstal aplikasi FASIH dan melakukan sinkronisasi, serta memastikan penugasan (assignment) sesuai dengan sampel yang menjadi alokasi tugasnya;</li>
+                                    <li>bersama dengan PPL, melakukan koordinasi dengan
+                                    penguasa wilayah dan Ketua SLS setempat untuk menginformasikan kegiatan
+                                    lapangan SKGB2025;</li>
+                                    <li>melakukan pengawasan/pendampingan terhadap PPL secara bergiliran yang menjadi tanggung jawabnya untuk memastikan bahwa
+                                    pencacahan sesuai dengan prosedur yang ditetapkan;</li>
+                                    <li>melakukan pemeriksaan data yang sudah dikirim oleh PPL;</li>
+                                    <li>mengisi Blok Pemeriksaan Kuesioner yang terdapat pada E-form VK2025-KERING
+                                    atau E-form VK2025-GILING;</li>
+                                    <li>mengesahkan (approval) data apabila hasil pendataan lapangan tidak ditemukan kesalahan atau mengembalikan (reject) kepada PPL apabila data masih diragukan atau perlu perbaikan (harus disertai dengan catatan
+                                    hasil pemeriksaan);</li>
+                                    <li>memastikan semua data hasil pendataan lapangan yang dikirimkan PPL menjadi tanggung jawabnya diperiksa dan disetujui (approved) jika sudah tidak ada kesalahan;</li>
+                                    <li>berkomunikasi dan berdiskusi dengan PPL maupun
+                                    Penanggung Jawab Teknis SKGB 2025 BPS Kabupaten/Kota mengenai kemajuan
+                                    dan permasalahan yang terjadi pada kegiatan pendataan lapangan;</li>
+                                    <li>mematuhi mekanisme, tahapan, dan jadwal waktu yang ditentukan;</li>
+                                    <li>melaksanakan tugas, perintah langsung maupun tidak langsung dari Pimpinan BPS.</li>
+                                </ol>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- 11 -->
+                    <div class="accordion-item">
+                        <h2 class="accordion-header" id="heading2Tab2">
+                            <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapse2Tab2" aria-expanded="false" aria-controls="collapse2Tab2">
+                                2. Pelaksanaan.
+                            </button>
+                        </h2>
+                        <div id="collapse2Tab2" class="accordion-collapse collapse" aria-labelledby="heading2Tab2" data-bs-parent="#accordionTab2">
+                            <div class="accordion-body">
+                                <br>
+                                <p>
+                                <ol>
+                                <li>Mengunjungi setiap SLS yang menjadi wilayah tugasnya.</li> 
+                                <li>Melakukan konfirmasi batas dan jumlah KK ke ketua SLS.</li> 
+                                <li>Mengisi informasi perubahan SLS pada daftar PSLS.</li> 
+                                <li>Melakukan penggambaran perubahan batas SLS pada Peta WS.</li> 
+                                <li>Melakukan pembagian segmen, menggambar batas dan memberi nomor segmen sesuai ketentuan pada Peta WS.</li>
+                                </ol>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- 12 -->
+                    <div class="accordion-item">
+                        <h2 class="accordion-header" id="heading3Tab2">
+                            <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapse3Tab2" aria-expanded="false" aria-controls="collapse3Tab2">
+                                3. Penelusuran SLS.
+                            </button>
+                        </h2>
+                        <div id="collapse3Tab2" class="accordion-collapse collapse" aria-labelledby="heading3Tab2" data-bs-parent="#accordionTab2">
+                            <div class="accordion-body">
+                                <br>
+                                <p>
+                                Melakukan penelusuran SLS dengan rincian:</p>
+                                <ol>
+                                <li>Melakukan geotagging batas SLS, minimal di 4 titik.</li>
+                                <li>Melakukan geotagging wilayah konsentrasi ekonomi.</li>
+                                <li>Menghitung jumlah bangunan tempat tinggal (BTT), bangunan bukan tempat tinggal (BBTT), bangunan tempat tinggal kosong (BTTK), bangunan khusus usaha (BKU), dan perkiraan muatan usaha (PMU) yang secara kasat mata terlihat dalam SLS dengan tally pada <b>SE2026-WILKERSTAT.LKM</b>.
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- 13 -->
+                    <div class="accordion-item">
+                        <h2 class="accordion-header" id="heading4Tab2">
+                            <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapse4Tab2" aria-expanded="false" aria-controls="collapse4Tab2">
+                                4. Penelusuran Wilayah Konsentrasi Ekonomi.
+                            </button>
+                        </h2>
+                        <div id="collapse4Tab2" class="accordion-collapse collapse" aria-labelledby="heading4Tab2" data-bs-parent="#accordionTab2">
+                            <div class="accordion-body">
+                                <br>
+                                <p>
+                                Melakukan perhitungan muatan dan membuat peta sketsa di wilayah konsentrasi ekonomi dengan rincian:</p>
+                                <ol>
+                                    <li>Mengunjungi pengelola untuk meminta izin penelusuran wilayah.</li> 
+                                    <li>Meminta gambar denah dan informasi jumlah usaha/tenant kepada pengelola.</li> 
+                                    <li>Menelusuri setiap lantai/area dan menghitung setiap tenant yang ada dengan tally menggunakan <b>LK-Peta dan SE2026-WILKERSTAT.LKM</b>.</li>
+                                    <li><b>LK-Peta</b>, jika pada SLS/non-SLS wilayah kerja PPL terdapat utamanya wilayah konsentrasi ekonomi bertingkat dan wilayah lain yang memerlukan penggambaran peta dengan lebih detail (apartemen).</li>
+                                    <li>Menggambarkan setiap segmen di LK-Peta.</li>
+                                </ol>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- 14 -->
+                    <div class="accordion-item">
+                        <h2 class="accordion-header" id="heading5Tab2">
+                            <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapse5Tab2" aria-expanded="false" aria-controls="collapse5Tab2">
+                                5. Laporan.
+                            </button>
+                        </h2>
+                        <div id="collapse5Tab2" class="accordion-collapse collapse" aria-labelledby="heading5Tab2" data-bs-parent="#accordionTab2">
+                            <div class="accordion-body">
+                                <br>
+                                <ol>
+                                    <li>Melaporkan kepada PML jika terdapat permasalahan lapangan atau aplikasi.</li>
+                                    <li>Melakukan rekonsiliasi sebanyak 3 (tiga) kali bersama PML.</li>
+                                    <li> Memeriksa kelengkapan isian dokumen dan peta, kemudian menyerahkannya ke PML.</li>
+                                    <li>Menandai project telah selesai di aplikasi Wilkerstat.</li>
+                                </ol>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="accordion-item">
+                        <h2 class="accordion-header" id="heading6Tab2">
+                            <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapse6Tab2" aria-expanded="false" aria-controls="collapse6Tab2">
+                                Pengisian PSLS
+                            </button>
+                        </h2>
+                        <div id="collapse6Tab2" class="accordion-collapse collapse" aria-labelledby="heading6Tab2" data-bs-parent="#accordionTab2">
+                            <div class="accordion-body">
+                                <iframe src="https://drive.google.com/file/d/1H3bpNCFuXjpST6Sl4I3D_uN2sCGuAwGN/preview" width="100%" height="480" allow="autoplay"></iframe>
+                                
+                            </div>
+                        </div>
+                    </div>
+                    <div class="accordion-item">
+                        <h2 class="accordion-header" id="heading7Tab2">
+                            <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapse7Tab2" aria-expanded="false" aria-controls="collapse7Tab2">
+                                Pengisian LKM
+                            </button>
+                        </h2>
+                        <div id="collapse7Tab2" class="accordion-collapse collapse" aria-labelledby="heading7Tab2" data-bs-parent="#accordionTab2">
+                            <div class="accordion-body">
+                                <iframe src="https://drive.google.com/file/d/1WQvWvwP-r2ft3B86Zf_8HrKL3G10RNGr/preview" width="100%" height="480" allow="autoplay"></iframe>
+                                
+                            </div>
+                        </div>
+                    </div>
+                    <div class="accordion-item">
+                        <h2 class="accordion-header" id="heading8Tab2">
+                            <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapse8Tab2" aria-expanded="false" aria-controls="collapse8Tab2">
+                                Penggambaran Peta WS
+                            </button>
+                        </h2>
+                        <div id="collapse8Tab2" class="accordion-collapse collapse" aria-labelledby="heading8Tab2" data-bs-parent="#accordionTab2">
+                            <div class="accordion-body">
+                                <iframe src="https://drive.google.com/file/d/1Xzo45fNikuC9e51uhd9WQfapfLCq8MXl/preview" width="100%" height="480" allow="autoplay"></iframe>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="accordion-item">
+                        <h2 class="accordion-header" id="heading9Tab2">
+                            <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapse9Tab2" aria-expanded="false" aria-controls="collapse9Tab2">
+                                Penggambaran LK-Peta
+                            </button>
+                        </h2>
+                        <div id="collapse9Tab2" class="accordion-collapse collapse" aria-labelledby="heading9Tab2" data-bs-parent="#accordionTab2">
+                            <div class="accordion-body">
+                                <iframe src="https://drive.google.com/file/d/1cLS9udVKNzmLmkHxKugB1xvWhNJBPShh/preview" width="100%" height="480" allow="autoplay"></iframe>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- W K E -->
+            <div class="tab-pane fade" id="tab3" role="tabpanel" aria-labelledby="tab3-tab">
+                <h3>Wilayah Konsentrasi Ekonomi</h3>
+                <br>
+                <div class="accordion" id="accordionTab3">
+                    <div class="accordion-item">
+                        <h2 class="accordion-header" id="heading1Tab3">
+                            <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#collapse1Tab3" aria-expanded="true" aria-controls="collapse1Tab3">
+                                Konsep Definisi.
+                            </button>
+                        </h2>
+                        <div id="collapse1Tab3" class="accordion-collapse collapse" aria-labelledby="heading1Tab3" data-bs-parent="#accordionTab3">
+                            <div class="accordion-body">
+                                <br>
+                                <p>Konsentrasi Ekonomi adalah fenomena ekonomi dan geografi yang menggambarkan proses pengumpulan dan pemusatan aktivitas ekonomi di suatu wilayah tertentu. 
+                                    <br><br>Wilayah yang termasuk konsentrasi ekonomi adalah wilayah yang umumnya memerlukan izin pengelola dalam melakukan perhitungan muatan usaha terutama untuk wilayah yang memiliki muatan besar. </p>
+                                <ul>
+                                    <li>Kode 8. Pusat perbelanjaan modern/mall/pertokoan/pasar</li>
+                                    <li>Kode 9. Kawasan industri/sentra industri</li>
+                                    <li>Kode 10. Hotel/ tempat rekreasi</li>
+                                    <li>Kode 12. Perkantoran</li>
+                                    <li>Kode 13. Pelabuhan/Bandara/Terminal Bus/Stasiun</li>
+                                </ul>
+                                Konsentrasi Ekonomi Bertingkat adalah wilayah konsentrasi ekonomi yang terletak pada bangunan yang memiliki lantai lebih dari 1 lantai.
+                                <br><br>
+                                Jika muatan dominan memerlukan prosedur perizinan maka bisa dibentuk subsls sendiri tanpa melihat batasan besaran muatan.
+                                <br><br>
+                                Untuk wilayah konsentrasi ekonomi dapat dibentuk Sub SLS terpisah tanpa memerhatikan jumlah muatannya.
+                            </div>
+                        </div>
+                    </div>
+                    <div class="accordion-item">
+                        <h2 class="accordion-header" id="heading2Tab3">
+                            <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapse2Tab3" aria-expanded="false" aria-controls="collapse2Tab3">
+                                Landmark Wilayah Konsentrasi Ekonomi.
+                            </button>
+                        </h2>
+                        <div id="collapse2Tab3" class="accordion-collapse collapse" aria-labelledby="heading2Tab3" data-bs-parent="#accordionTab3">
+                            <div class="accordion-body">
+                                <br>
+                                <p>Contoh landmark wilayah konsentrasi ekonomi yaitu <b>mal, pasar, kompleks pertokoan, kompleks perkantoran (bisa di 1 tower atau beberapa gedung), kawasan industri, dan sentra industri</b>.</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="accordion-item">
+                        <h2 class="accordion-header" id="heading3Tab3">
+                            <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapse3Tab3" aria-expanded="false" aria-controls="collapse3Tab3">
+                                8. Pusat perbelanjaan modern/mall/pertokoan/pasar
+                            </button>
+                        </h2>
+                        <div id="collapse3Tab3" class="accordion-collapse collapse" aria-labelledby="heading3Tab3" data-bs-parent="#accordionTab3">
+                            <div class="accordion-body">
+                                <br>
+                                <p>
+                                    Pasar adalah area tempat jual beli barang dengan jumlah penjual lebih dari satu
+                                    baik yang disebut sebagai Pusat Perbelanjaan, Pasar Tradisional, Pertokoan, Mall,
+                                    Plasa, Pusat Perdagangan mapun sebutan lainnya (Peraturan Menteri
+                                    Perdagangan Republik Indonesia No. 70 Tahun 2013).
+                                    <br><br>
+                                    Pasar Tradisional adalah pasar yang dibangun dan dikelola oleh Pemerintah,
+                                    Pemerintah Daerah, Swasta, BUMN, dan BUMD, termasuk kerjasama dengan
+                                    swasta dengan tempat usaha berupa Toko, Kios, Los dan tenda yang
+                                    dimiliki/dikelola oleh pedagang kecil, menengah, swadaya masyarakat atau
+                                    koperasi dengan usaha skala kecil, modal kecil dan dengan proses jual beli
+                                    barang dagangan melalui tawar menawar (Peraturan Menteri Perdagangan
+                                    Republik Indonesia No. 70 Tahun 2013).
+                                </p>    
+                            </div>
+                        </div>
+                    </div>
+                    <div class="accordion-item">
+                        <h2 class="accordion-header" id="heading4Tab3">
+                            <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapse4Tab3" aria-expanded="false" aria-controls="collapse4Tab3">
+                                9. Kawasan industri/sentra industri.
+                            </button>
+                        </h2>
+                        <div id="collapse4Tab3" class="accordion-collapse collapse" aria-labelledby="heading4Tab3" data-bs-parent="#accordionTab3">
+                            <div class="accordion-body">
+                                <br>
+                                <p>
+                                    Kawasan Industri adalah kawasan tempat pemusatan kegiatan Industri yang
+                                    dilengkapi dengan sarana dan prasarana penunjang yang dikembangkan dan
+                                    dikelola oleh Perusahaan Kawasan Industri (Peraturan Pemerintah No. 142 Tahun
+                                    2015).
+                                    <br><br>
+                                    Sentra Industri Kecil dan Menengah adalah sekelompok Industri Kecil dan
+                                    Menengah dalam satu lokasi/tempat yang terdiri dari paling sedikit lima unit
+                                    usaha yang menghasilkan produk sejenis, dan/atau melakukan proses produksi
+                                    yang sama (Peraturan Pemerintah No. 29 Tahun 2018).
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="accordion-item">
+                        <h2 class="accordion-header" id="heading5Tab3">
+                            <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapse5Tab3" aria-expanded="false" aria-controls="collapse5Tab3">
+                                10. Hotel/tempat rekreasi.
+                            </button>
+                        </h2>
+                        <div id="collapse5Tab3" class="accordion-collapse collapse" aria-labelledby="heading5Tab3" data-bs-parent="#accordionTab3">
+                            <div class="accordion-body">
+                                <br>
+                                <p>
+                                    Hotel adalah penyediaan akomodasi berupa kamar-kamar di dalam suatu
+                                    bangunan, yang dapat dilengkapi dengan jasa pelayanan makan dan minum,
+                                    kegiatan hiburan dan/atau fasilitas lainnya secara harian dengan tujuan
+                                    memperoleh keuntungan (Peraturan Menteri Pariwisata dan Ekonomi Kreatif No.
+                                    53 Tahun 2013).
+                                    <br><br>
+                                    Tempat rekreasi adalah tempat dimana seseorang/sekelompok orang
+                                    melakukan aktivitas yang berfungsi menyegarkan kembali kondisi fisik/mental,
+                                    beristirahat sejenak dari aktivitas rutin sehari-hari dengan tujuan memperoleh
+                                    kesenangan/kegembiraan atau sekedar melepas lelah. Tempat rekreasi dapat
+                                    berupa taman rekreasi, tempat bermain anak-anak/playground, pemancingan,
+                                    dan sebagainya.
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="accordion-item">
+                        <h2 class="accordion-header" id="heading6Tab3">
+                            <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapse6Tab3" aria-expanded="false" aria-controls="collapse6Tab3">
+                                12. Perkantoran.
+                            </button>
+                        </h2>
+                        <div id="collapse6Tab3" class="accordion-collapse collapse" aria-labelledby="heading6Tab3" data-bs-parent="#accordionTab3">
+                            <div class="accordion-body">
+                                <br>
+                                <p>
+                                    sebutan untuk tempat yang digunakan untuk perniagaan atau perusahaan yang dijalankan secara rutin. Kantor bisa hanya berupa suatu kamar atau ruangan kecil maupun bangunan bertingkat tinggi.
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="accordion-item">
+                        <h2 class="accordion-header" id="heading7Tab3">
+                            <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapse7Tab3" aria-expanded="false" aria-controls="collapse7Tab3">
+                                13. Pelabuhan/Bandara/Terminal Bus/Stasiun.
+                            </button>
+                        </h2>
+                        <div id="collapse7Tab3" class="accordion-collapse collapse" aria-labelledby="heading7Tab3" data-bs-parent="#accordionTab3">
+                            <div class="accordion-body">
+                                <br>
+                                <p>
+                                    Pelabuhan adalah tempat yang terdiri atas daratan dan/atau perairan dengan batas-batas tertentu sebagai tempat kegiatan pemerintahan dan kegiatan pengusahaan yang dipergunakan sebagai tempat kapal bersandar, naik turun penumpang, dan/atau bongkar muat barang, berupa terminal dan tempat berlabuh kapal yang dilengkapi dengan fasilitas keselamatan dan keamanan pelayaran dan kegiatan penunjang pelabuhan serta sebagai tempat perpindahan intra-dan antarmoda transportasi (UU No. 17 Tahun 2008).
+                                    <br><br>
+                                    Bandara adalah kawasan di daratan dan/atau perairan dengan batas-batas tertentu yang
+                                    digunakan sebagai tempat pesawat udara mendarat dan lepas landas, naik turun
+                                    penumpang, bongkar muat barang, dan tempat perpindahan intra dan antarmoda
+                                    transportasi, yang dilengkapi dengan fasilitas keselamatan dan keamanan penerbangan,
+                                    serta fasilitas pokok dan fasilitas penunjang lainnya (UU No.1 Tahun 2009).
+                                    <br><br>
+                                    Terminal adalah pangkalan Kendaraan Bermotor Umum yang digunakan untuk mengatur
+                                    kedatangan dan keberangkatan, menaikkan dan menurunkan orang dan/atau barang, serta
+                                    perpindahan moda angkutan (UU No.22 Tahun 2009).
+                                    <br><br>
+                                    Stasiun adalah tempat kereta api berangkat atau berhenti untuk melayani naik turun
+                                    penumpang; bongkar muat barang; dan/atau keperluan operasi kereta api (UU No.23 Tahun
+                                    2007).
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Bangunan -->
+            <div class="tab-pane fade" id="tab4" role="tabpanel" aria-labelledby="tab4-tab">
+                <h3>Jenis-jenis Bangunan</h3>
+                <br>
+                <div class="accordion" id="accordionTab4">
+                    <div class="accordion-item">
+                        <div class="accordion-body">
+                                <br>
+                                <iframe src="https://drive.google.com/file/d/1xvUno1n0heWhuIlz0le43qLYC-Z7dZ2Q/preview" width="100%" height="480" allow="autoplay"></iframe>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Muatan -->
+            <div class="tab-pane fade" id="tab5" role="tabpanel" aria-labelledby="tab5-tab">
+                <h3>Kriteria Muatan Dominan selain WKE</h3>
+                <br>
+                <div class="accordion" id="accordionTab5">
+                    <div class="accordion-item">
+                        <h2 class="accordion-header" id="heading1Tab5">
+                            <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#collapse1Tab5" aria-expanded="true" aria-controls="collapse1Tab5">
+                                Kode 1 Permukiman Biasa.
+                            </button>
+                        </h2>
+                        <div id="collapse1Tab5" class="accordion-collapse collapse" aria-labelledby="heading1Tab5" data-bs-parent="#accordionTab5">
+                            <div class="accordion-body">
+                                <br>
+                                <p>
+                                    bagian dari lingkungan hunian yang terdiri atas lebih dari satu satuan perumahan yang mempunyai prasarana, sarana, utilitas umum, serta mempunyai penunjang kegiatan fungsi lain di kawasan perkotaan atau kawasan perdesaan.
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="accordion-item">
+                        <h2 class="accordion-header" id="heading2Tab5">
+                            <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapse2Tab5" aria-expanded="false" aria-controls="collapse2Tab5">
+                                Kode 2 Permukiman Mewah/elite/real estat.
+                            </button>
+                        </h2>
+                        <div id="collapse2Tab5" class="accordion-collapse collapse" aria-labelledby="heading2Tab5" data-bs-parent="#accordionTab5">
+                            <div class="accordion-body">
+                                <br>
+                                <p>
+                                    rumah komersial dengan harga jual lebih besar dari 6 (enam) kali harga jual rumah sederhana. 
+                                    <br><br>Rumah sederhana adalah rumah umum yang dibangun di atas tanah dengan luas lantai dan harga jual sesuai ketentuan pemerintah.
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="accordion-item">
+                        <h2 class="accordion-header" id="heading3Tab5">
+                            <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapse3Tab5" aria-expanded="false" aria-controls="collapse3Tab5">
+                                Kode 3 Permukiman Kumuh.
+                            </button>
+                        </h2>
+                        <div id="collapse3Tab5" class="accordion-collapse collapse" aria-labelledby="heading3Tab5" data-bs-parent="#accordionTab5">
+                            <div class="accordion-body">
+                                <br>
+                                <p>
+                                    permukiman yang tidak layak huni karena ketidakteraturan bangunan, tingkat kepadatan bangunan yang tinggi, dan kualitas bangunan serta sarana dan prasarana yang tidak memenuhi syarat.</p>
+                                
+                            </div>
+                        </div>
+                    </div>
+                    <div class="accordion-item">
+                        <h2 class="accordion-header" id="heading4Tab5">
+                            <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapse4Tab5" aria-expanded="false" aria-controls="collapse4Tab5">
+                                Kode 4 Apartemen/kondominium/flat.
+                            </button>
+                        </h2>
+                        <div id="collapse4Tab5" class="accordion-collapse collapse" aria-labelledby="heading4Tab5" data-bs-parent="#accordionTab5">
+                            <div class="accordion-body">
+                                <br>
+                                <p>
+                                    bangunan gedung bertingkat yang dibangun dalam suatu lingkungan yang terbagi dalam bagian-bagian yang distrukturkan secara fungsional, baik dalam arah horizontal maupun vertikal dan merupakan satuan-satuan yang masing-masing dapat dimiliki dan digunakan secara terpisah, terutama untuk tempat hunian yang dilengkapi dengan bagian bersama, benda bersama dan tanah bersama.
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="accordion-item">
+                        <h2 class="accordion-header" id="heading5Tab5">
+                            <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapse5Tab5" aria-expanded="false" aria-controls="collapse5Tab5">
+                                Kode 5 Kos-kosan/kontrakan.
+                            </button>
+                        </h2>
+                        <div id="collapse5Tab5" class="accordion-collapse collapse" aria-labelledby="heading5Tab5" data-bs-parent="#accordionTab5">
+                            <div class="accordion-body">
+                                <br>
+                                <p>
+                                    kamar atau rumah yang disewa dengan sistem pembayaran bulanan atau tahunan.
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="accordion-item">
+                        <h2 class="accordion-header" id="heading6Tab5">
+                            <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapse6Tab5" aria-expanded="false" aria-controls="collapse6Tab5">
+                                Kode 6 Pesantren/barak/asrama/seminari.
+                            </button>
+                        </h2>
+                        <div id="collapse6Tab5" class="accordion-collapse collapse" aria-labelledby="heading6Tab5" data-bs-parent="#accordionTab5">
+                            <div class="accordion-body">
+                                <br>
+                                <p>
+                                    suatu wilayah yang penghuninya homogen dari sisi kepentingan atau tujuan tinggal, seperti pesantren atau seminari untuk pendidikan, barak militer untuk keamanan, dormitori perusahaan sebagai mess/tempat tinggal pekerja perusahaan, lembaga permasyarakatan (lapas).
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="accordion-item">
+                        <h2 class="accordion-header" id="heading7Tab5">
+                            <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapse7Tab5" aria-expanded="false" aria-controls="collapse7Tab5">
+                                Kode 11 Wilayah Tidak Berpenghuni (hutan/kebun, pulau kosong, danau/waduk/rawa, lahan kosong).
+                            </button>
+                        </h2>
+                        <div id="collapse7Tab5" class="accordion-collapse collapse" aria-labelledby="heading7Tab5" data-bs-parent="#accordionTab5">
+                            <div class="accordion-body">
+                                <br>
+                                <p>
+                                    penggunaan lahan dalam bentuk lainnya, baik dalam lingkup pertanian maupun non pertanian, seperti hutan/kebun, pulau kosong, danau/waduk/rawa, lahan kosong.
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="accordion-item">
+                        <h2 class="accordion-header" id="heading8Tab5">
+                            <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapse8Tab5" aria-expanded="false" aria-controls="collapse8Tab5">
+                                PERKIRAAN MUATAN USAHA (LKM)
+                            </button>
+                        </h2>
+                        <div id="collapse8Tab5" class="accordion-collapse collapse" aria-labelledby="heading8Tab5" data-bs-parent="#accordionTab5">
+                            <div class="accordion-body">
+                                <br>
+                                <p>
+                                    "Usaha adalah suatu kegiatan dengan tujuan menghasilkan barang dan/atau jasa untuk memperoleh keuntungan dan/atau memenuhi kebutuhan sendiri "
+                                    <ul>
+                                        <li>Untuk setiap bangunan yang teridentifikasi sebagai 1 BKU maka juga akan terhitung minimal 1 perkiraan muatan usaha.</li>
+                                        <li>For usaha di pasar/mall/pertokoan/perkantoran, jumlah perkiraan muatan usaha minimal sebanyak jumlah toko/tenant/kantor yang terdaftar pada bangunan tersebut. <br><br>Informasi jumlah perkiraan muatan usaha bisa didapatkan dengan bertanya pada pengelola (jumlah tenant/pedagang) serta dengan validasi perhitungan dengan tally.</li>
+                                        <li>Untuk bangunan tempat tinggal (BTT) yang secara kasatmata terlihat memiliki usaha seperti warung, salon, atau terdapat baliho usaha, maka bangunan tersebut dihitung sebagai 1 BTT dan 1 perkiraan muatan usaha.</li>
+                                        <li>Untuk bangunan khusus usaha yang secara kasatmata hanya terlihat seperti satu bangunan, namun terdapat banyak plang usaha maka dihitung sebagai 1 BKU dengan perkiraan jumlah usaha sebanyak plang pada bangunan tersebut.</li>
+                                    </ul>
+                                    
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- QnA -->
+            <div class="tab-pane fade" id="tab6" role="tabpanel" aria-labelledby="tab6-tab">
+                <h3>Contoh Kasus</h3>
+                <br>
+                <div class="accordion" id="accordionTab6">
+                    <div class="accordion-item">
+                        <div class="accordion-body">
+                                <br>
+                                <div class="flourish-embed flourish-table" data-src="visualisation/23407650"><script src="https://public.flourish.studio/resources/embed.js"></script><noscript><img src="https://public.flourish.studio/visualisation/23407650/thumbnail" width="100%" alt="table visualization" /></noscript></div>
+                            </div>
+                        </div>
+                    </div>
+            </div>
+            
+            <!-- Hiburan -->
+            <div class="tab-pane fade" id="tab7" role="tabpanel" aria-labelledby="tab7-tab">
+                <h5>Kadang kita suka mempersulit sesuatu yang sebenarnya mudah, mungkin karena kita kurang hiburan.</h5>
+                <br>
+                <div class="accordion" id="accordionTab7">
+                    <div class="accordion-item">
+                        <div class="accordion-body">
+                                <br>
+                                <p>Hiburan dulu</p>
+                            <a href="https://www.youtube.com/watch?v=v9jwHwcqpk8&list=PLeULqPPfFuZwBwpFAFAR_BfdcIO8_8GRy" target="_blank">BPS Jabar Berkibar</a>
+                            <br>
+                            <a href="https://www.youtube.com/watch?v=ZBZ-GajPwyM&list=PLeULqPPfFuZzainkiFKyTisnoEqsL2-Ra" target="_blank">Untuk Mitra Statistik</a>
+                            <br><br>
+                            jangan lupa Like, Subscribe dan Comment
+                            
+                        </div>
+                    </div>
+                </div>
+            </div>          
+        </div>
+    </main>
+
+    <footer class="text-center">
+        <p>@fhy3273</p>
+    </footer>
+
+    <!-- Bootstrap Bundle with Popper -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
+    <!-- Custom JavaScript -->
+    <script type="module">
+        const tabData = {
+            tab1: {
+                title: 'Tab One',
+                accordions: [
+                    '1. Tersedia Standar Pelayanan (SP) sesuai dengan ketentuan peraturan perundang-undangan yang berlaku',
+                    'Accordion Item #2 for Tab One',
+                    'Accordion Item #3 for Tab One',
+                    'Accordion Item #4 for Tab One',
+                    'Accordion Item #5 for Tab One'
+                ]
+            },
+            tab2: {
+                title: 'Tab Two',
+                accordions: [
+                    'Accordion Item #1 for Tab Two',
+                    'Accordion Item #2 for Tab Two',
+                    'Accordion Item #3 for Tab Two',
+                    'Accordion Item #4 for Tab Two',
+                    'Accordion Item #5 for Tab Two'
+                ]
+            },
+            tab3: {
+                title: 'Tab Three',
+                accordions: [
+                    'Accordion Item #1 for Tab Three',
+                    'Accordion Item #2 for Tab Three',
+                    'Accordion Item #3 for Tab Three',
+                    'Accordion Item #4 for Tab Three',
+                    'Accordion Item #5 for Tab Three'
+                ]
+            },
+            tab4: {
+                title: 'Tab Four',
+                accordions: [
+                    'Accordion Item #1 for Tab Four',
+                    'Accordion Item #2 for Tab Four',
+                    'Accordion Item #3 for Tab Four',
+                    'Accordion Item #4 for Tab Four',
+                    'Accordion Item #5 for Tab Four'
+                ]
+            },
+            tab5: {
+                title: 'Tab Five',
+                accordions: [
+                    'Accordion Item #1 for Tab Five',
+                    'Accordion Item #2 for Tab Five',
+                    'Accordion Item #3 for Tab Five',
+                    'Accordion Item #4 for Tab Five',
+                    'Accordion Item #5 for Tab Five'
+                ]
+            },
+            tab6: {
+                title: 'Tab Six',
+                accordions: [
+                    'Accordion Item #1 for Tab Six',
+                    'Accordion Item #2 for Tab Six',
+                    'Accordion Item #3 for Tab Six',
+                    'Accordion Item #4 for Tab Six',
+                    'Accordion Item #5 for Tab Six'
+                ]
+            },
+            tab7: {
+                title: 'Tab Seven',
+                accordions: [
+                    'Accordion Item #1 for Tab Six',
+                    'Accordion Item #2 for Tab Six',
+                    'Accordion Item #3 for Tab Six',
+                    'Accordion Item #4 for Tab Six',
+                    'Accordion Item #5 for Tab Six'
+                ]
+            }
+        };
+
+        // Content for the info buttons within accordions
+        const infoContent = {
+            1: "This is the *first* specific piece of information for this item. It expands on the accordion's main content.",
+            2: "This is the *second* specific piece of information. It provides additional context or details.",
+            3: "This is the *third* specific piece of information. It might offer a summary or a call to action."
+        };
+
+        /**
+        * Generates the HTML string for a single Bootstrap accordion item.
+        * @param {string} tabId The ID of the parent tab (e.g., 'tab1').
+        * @param {number} itemIndex The zero-based index of the accordion item.
+        * @param {string} headingText The text for the accordion button's heading.
+        * @param {string} parentAccordionId The ID of the parent accordion container.
+        * @returns {string} The HTML string for the accordion item.
+        */
+        function generateAccordionItem(tabId, itemIndex, headingText, parentAccordionId) {
+            const isFirstItem = itemIndex === 0;
+            const ordinals = ["first", "second", "third", "fourth", "fifth"];
+            const ordinal = ordinals[itemIndex] || (itemIndex + 1).toString(); // Fallback for more than 5 items
+            const tabName = tabData[tabId].title;
+            const collapseId = `collapse${itemIndex + 1}${tabId.charAt(0).toUpperCase() + tabId.slice(1)}`; // e.g., collapse1Tab1
+            const headingId = `heading${itemIndex + 1}${tabId.charAt(0).toUpperCase() + tabId.slice(1)}`; // e.g., heading1Tab1
+
+            return `
+                <div class="accordion-item">
+                    <h2 class="accordion-header" id="${headingId}">
+                        <button class="accordion-button ${isFirstItem ? '' : 'collapsed'}" type="button" data-bs-toggle="collapse" data-bs-target="#${collapseId}" aria-expanded="${isFirstItem ? 'true' : 'false'}" aria-controls="#${collapseId}">
+                            ${headingText}
+                        </button>
+                    </h2>
+                    <div id="${collapseId}" class="accordion-collapse collapse ${isFirstItem ? 'show' : ''}" aria-labelledby="${headingId}" data-bs-parent="#${parentAccordionId}">
+                        <div class="accordion-body">
+                            <p>This is the body for the ${ordinal} accordion item in ${tabName}.</p>
+                            <div class="mt-3">
+                                <button class="btn btn-primary btn-sm me-2" data-bs-toggle="modal" data-bs-target="#infoModal"
+                                        data-tab-id="${tabId}" data-accordion-index="${itemIndex}" data-info-type="1">Show Info 1</button>
+                                <button class="btn btn-success btn-sm me-2" data-bs-toggle="modal" data-bs-target="#infoModal"
+                                        data-tab-id="${tabId}" data-accordion-index="${itemIndex}" data-info-type="2">Show Info 2</button>
+                                <button class="btn btn-warning btn-sm" data-bs-toggle="modal" data-bs-target="#infoModal"
+                                        data-tab-id="${tabId}" data-accordion-index="${itemIndex}" data-info-type="3">Show Info 3</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            `;
+        }
+
+        // Keep track of tabs whose content has already been loaded to prevent redundant generation
+        const loadedTabs = new Set();
+
+        /**
+        * Renders the content (h3 and accordion) for a specific tab into its designated pane.
+        * @param {string} tabId The ID of the tab to render (e.g., 'tab1').
+        */
+        function renderTabContent(tabId) {
+            // Only load content if it hasn't been loaded before for this tab
+            if (loadedTabs.has(tabId)) {
+                return;
+            }
+
+            const tabPane = document.getElementById(tabId);
+            if (!tabPane) {
+                console.error(`Tab pane with ID "${tabId}" not found!`);
+                return;
+            }
+
+            const data = tabData[tabId];
+            if (!data) {
+                console.warn(`No data found for tab: ${tabId}`);
+                tabPane.innerHTML = `<h3>Content not found for ${tabId}</h3>`;
+                loadedTabs.add(tabId); // Mark as loaded even if content is missing
+                return;
+            }
+
+            // Generate a unique ID for the accordion within this tab
+            const accordionId = `accordion${tabId.charAt(0).toUpperCase() + tabId.slice(1)}`; // e.g., accordionTab1
+
+            let accordionsHtml = '';
+            data.accordions.forEach((headingText, index) => {
+                accordionsHtml += generateAccordionItem(tabId, index, headingText, accordionId);
+            });
+
+            // Set the inner HTML of the tab pane
+            // tabPane.innerHTML = `
+            //     <h3>Content for ${data.title}</h3>
+            //     <div class="accordion" id="${accordionId}">
+            //         ${accordionsHtml}
+            //     </div>
+            // `;
+
+            loadedTabs.add(tabId); // Mark this tab as loaded
+            console.log(`Content loaded for tab: ${tabId}`);
+        }
+
+        // THEME MANAGEMENT
+        const STORAGE_KEY_THEME_MODE = 'themeMode';
+        const STORAGE_KEY_THEME_COLOR = 'themeColor';
+
+        // New elements for theme toggle
+        const themeToggleBtn = document.getElementById('themeToggleBtn');
+        const themeSettingsPanel = document.getElementById('themeSettingsPanel');
+        const closeThemePanelBtn = document.getElementById('closeThemePanelBtn');
+
+        /**
+        * Applies the selected theme to the document body and saves it to localStorage.
+        * @param {string} mode 'light' or 'dark'
+        * @param {string} color 'orange', 'blue', or 'green'
+        */
+        function applyTheme(mode, color) {
+            const body = document.body;
+            
+            // Remove existing mode classes
+            body.classList.remove('light-theme', 'dark-theme');
+            // Add the new mode class
+            body.classList.add(`${mode}-theme`);
+
+            // Remove existing color classes
+            body.classList.remove('theme-orange', 'theme-blue', 'theme-green');
+            // Add the new color class
+            body.classList.add(`theme-${color}`);
+            
+            // Save preferences in localStorage
+            localStorage.setItem(STORAGE_KEY_THEME_MODE, mode);
+            localStorage.setItem(STORAGE_KEY_THEME_COLOR, color);
+
+            // Update UI elements to reflect the current theme state
+            const darkModeSwitch = document.getElementById('darkModeSwitch');
+            const colorThemeRadios = document.querySelectorAll('input[name="colorTheme"]');
+
+            if (darkModeSwitch) {
+                darkModeSwitch.checked = (mode === 'dark');
+            }
+            colorThemeRadios.forEach(radio => {
+                radio.checked = (radio.value === color);
+            });
+        }
+
+        /**
+        * Loads the theme preference from localStorage and applies it.
+        */
+        function loadTheme() {
+            const savedMode = localStorage.getItem(STORAGE_KEY_THEME_MODE) || 'light';
+            const savedColor = localStorage.getItem(STORAGE_KEY_THEME_COLOR) || 'orange'; // Default to orange
+            applyTheme(savedMode, savedColor);
+        }
+
+        // Function to toggle theme settings panel visibility
+        function toggleThemeSettingsPanel() {
+            if (themeSettingsPanel) {
+                themeSettingsPanel.classList.toggle('show');
+            }
+        }
+
+        document.addEventListener('DOMContentLoaded', () => {
+            console.log('Web page loaded successfully!');
+
+            // Load theme on page load
+            loadTheme();
+
+            // Get all tab buttons
+            const tabTriggers = document.querySelectorAll('#myTab button');
+            const tabContentContainer = document.getElementById('myTabContent');
+
+            // Identify the initially active tab and render its content
+            const initialActiveTabButton = document.querySelector('#myTab button.active');
+            if (initialActiveTabButton) {
+                const initialTabId = initialActiveTabButton.id.replace('-tab', '');
+                renderTabContent(initialTabId);
+            }
+
+            // Attach event listeners to tab buttons to load content when a tab is shown
+            tabTriggers.forEach(trigger => {
+                trigger.addEventListener('shown.bs.tab', event => {
+                    const activatedTabId = event.target.id.replace('-tab', '');
+                    console.log(`Tab shown: ${activatedTabId}`);
+                    console.log(`Previous tab: ${event.relatedTarget ? event.relatedTarget.id : 'None'}`);
+                    renderTabContent(activatedTabId); // Load content for the newly activated tab
+                });
+            });
+
+            // Using event delegation for accordion opens/closes for dynamically loaded content
+            // Attach listener to the common parent '#myTabContent'
+            if (tabContentContainer) {
+                tabContentContainer.addEventListener('shown.bs.collapse', event => {
+                    console.log(`Accordion item opened: ${event.target.id}`);
+                });
+                tabContentContainer.addEventListener('hidden.bs.collapse', event => {
+                    console.log(`Accordion item closed: ${event.target.id}`);
+                });
+            } else {
+                console.warn('myTabContent container not found for accordion event delegation.');
+            }
+
+            // Theme settings event listeners
+            const darkModeSwitch = document.getElementById('darkModeSwitch');
+            const colorThemeRadios = document.querySelectorAll('input[name="colorTheme"]');
+
+            if (darkModeSwitch) {
+                darkModeSwitch.addEventListener('change', () => {
+                    const currentColor = document.querySelector('input[name="colorTheme"]:checked')?.value || 'orange';
+                    const currentMode = darkModeSwitch.checked ? 'dark' : 'light';
+                    applyTheme(currentMode, currentColor);
+                });
+            }
+
+            colorThemeRadios.forEach(radio => {
+                radio.addEventListener('change', () => {
+                    const currentMode = darkModeSwitch ? (darkModeSwitch.checked ? 'dark' : 'light') : 'light';
+                    const currentColor = radio.value;
+                    applyTheme(currentMode, currentColor);
+                });
+            });
+
+            // Add event listeners for the new theme toggle functionality
+            if (themeToggleBtn) {
+                themeToggleBtn.addEventListener('click', toggleThemeSettingsPanel);
+            }
+
+            if (closeThemePanelBtn) {
+                closeThemePanelBtn.addEventListener('click', toggleThemeSettingsPanel); // Use the same toggle function to close
+            }
+
+            // Info Modal event listener
+            const infoModalElement = document.getElementById('infoModal');
+            const infoModalTitle = document.getElementById('infoModalLabel');
+            const infoModalBody = document.getElementById('infoModalBody');
+
+            if (infoModalElement) {
+                infoModalElement.addEventListener('show.bs.modal', function (event) {
+                    // Button that triggered the modal
+                    const button = event.relatedTarget;
+                    // Extract info from data-* attributes
+                    const tabId = button.dataset.tabId;
+                    const accordionIndex = parseInt(button.dataset.accordionIndex, 10);
+                    const infoType = button.dataset.infoType;
+
+                    const tabName = tabData[tabId] ? tabData[tabId].title : 'Unknown Tab';
+                    const accordionHeading = tabData[tabId] && tabData[tabId].accordions[accordionIndex] ? tabData[tabId].accordions[accordionIndex] : `Accordion Item #${accordionIndex + 1}`;
+
+                    // Update the modal's content
+                    if (infoModalTitle) {
+                        infoModalTitle.textContent = `Details from "${tabName}" - "${accordionHeading}" (Info ${infoType})`;
+                    }
+                    if (infoModalBody) {
+                        infoModalBody.innerHTML = `
+                            <p>${infoContent[infoType]}</p>
+                            <p class="text-muted small">This content is from Tab: <strong>${tabName}</strong>, Accordion: <strong>${accordionHeading}</strong>.</p>
+                        `;
+                    }
+                });
+            } else {
+                console.warn('Info Modal element not found.');
+            }
+        });
+    </script>
+</body>
+</html>
